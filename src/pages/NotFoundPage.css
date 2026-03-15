@@ -1,0 +1,30 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: var(--space-4);
+  animation: fadeInUp 0.4s ease both;
+}
+
+.not-found__code {
+  font-size: 80px;
+  font-weight: 500;
+  color: var(--color-border);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.not-found__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.not-found__desc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}

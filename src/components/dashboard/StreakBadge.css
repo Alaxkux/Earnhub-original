@@ -1,0 +1,36 @@
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  animation: fadeInUp 0.4s ease 0.15s both;
+}
+
+.streak-badge__flame {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.streak-badge__info {
+  flex: 1;
+}
+
+.streak-badge__count {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.streak-badge__sub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}
+
+.streak-badge__btn {
+  font-size: 13px;
+  padding: var(--space-2) var(--space-4);
+  flex-shrink: 0;
+}

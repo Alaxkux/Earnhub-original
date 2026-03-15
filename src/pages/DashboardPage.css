@@ -1,0 +1,33 @@
+.dashboard__stats {
+  margin-bottom: var(--space-6);
+}
+
+.dashboard__mid {
+  margin-bottom: var(--space-6);
+}
+
+.dashboard__recent {
+  animation: fadeInUp 0.4s ease 0.2s both;
+}
+
+.dashboard__section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.dashboard__section-header h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.dashboard__see-all {
+  font-size: 13px;
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: opacity var(--transition-fast);
+}
+
+.dashboard__see-all:hover { opacity: 0.7; }

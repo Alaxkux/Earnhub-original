@@ -1,0 +1,72 @@
+.goal-progress {
+  padding: var(--space-5) var(--space-6);
+  animation: fadeInUp 0.4s ease 0.1s both;
+}
+
+.goal-progress__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.goal-progress__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-right: var(--space-2);
+}
+
+.goal-progress__percent {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-primary);
+  background: var(--color-primary-dim);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.goal-progress__amounts {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.goal-progress__earned {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.goal-progress__sep {
+  color: var(--color-text-muted);
+  margin: 0 2px;
+}
+
+.goal-progress__target {
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+.goal-progress__track {
+  height: 8px;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+
+.goal-progress__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  min-width: 4px;
+}
+
+.goal-progress__note {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}

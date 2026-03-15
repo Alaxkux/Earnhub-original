@@ -1,0 +1,43 @@
+.weekly-chart {
+  padding: var(--space-5) var(--space-6);
+  animation: fadeInUp 0.4s ease 0.1s both;
+}
+
+.weekly-chart__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
+.weekly-chart__title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-1);
+}
+
+.weekly-chart__total {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.weekly-chart__canvas-wrap {
+  height: 220px;
+  position: relative;
+}
+
+.weekly-chart__empty {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-align: center;
+}

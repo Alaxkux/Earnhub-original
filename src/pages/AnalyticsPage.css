@@ -1,0 +1,15 @@
+.analytics-page__stats {
+  margin-bottom: var(--space-6);
+}
+
+.analytics-page__charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+}
+
+@media (max-width: 1024px) {
+  .analytics-page__charts {
+    grid-template-columns: 1fr;
+  }
+}
