@@ -16,7 +16,7 @@ export function getCPXOfferwallURL(userId, { width = 900, height = 700 } = {}) {
     height,
   })
 
-  return `https://offer.cpx-research.com/index.php?${params.toString()}`
+  return `https://offers.cpx-research.com/index.php?${params.toString()}`
 }
 
 export function listenForCPXCompletion(onComplete) {
