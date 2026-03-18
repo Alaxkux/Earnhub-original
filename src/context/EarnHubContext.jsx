@@ -1,9 +1,10 @@
 import { createContext, useContext, useReducer, useEffect } from 'react'
+import { authAPI } from '../services/api'
 
-/* ──────────────────────────────────────────
-   Initial State
-────────────────────────────────────────── */
 const initialState = {
+  // User object
+  user: null,          // ← added
+
   // User / wallet
   balance:     0.00,
   coins:       0,
@@ -24,21 +25,16 @@ const initialState = {
 
   // Analytics
   analytics: {
-    weeklyEarnings: [], // [{ date, amount }]
-    platformBreakdown: [], // [{ platform, amount }]
+    weeklyEarnings: [],
+    platformBreakdown: [],
   },
 
-  // Daily bonus cooldown — ISO date string of last claim (e.g. "2024-06-14")
   lastBonusClaimed: null,
-
-  // UI
   sidebarOpen: true,
 }
 
-/* ──────────────────────────────────────────
-   Action Types
-────────────────────────────────────────── */
 export const ACTIONS = {
+  SET_USER:                'SET_USER',         // ← added
   SET_OFFERS:              'SET_OFFERS',
   SET_OFFERS_LOADING:      'SET_OFFERS_LOADING',
   SET_OFFERS_ERROR:        'SET_OFFERS_ERROR',
@@ -52,11 +48,11 @@ export const ACTIONS = {
   SET_DAILY_GOAL_TARGET:   'SET_DAILY_GOAL_TARGET',
 }
 
-/* ──────────────────────────────────────────
-   Reducer
-────────────────────────────────────────── */
 function reducer(state, action) {
   switch (action.type) {
+
+    case ACTIONS.SET_USER:                          // ← added
+      return { ...state, user: action.payload }
 
     case ACTIONS.LOAD_PERSISTED_STATE:
       return { ...state, ...action.payload }
@@ -71,14 +67,11 @@ function reducer(state, action) {
       return { ...state, offers: action.payload, offersLoading: false, offersError: null }
 
     case ACTIONS.LOG_TASK: {
-      const task = action.payload // { id, title, provider, reward, completedAt }
+      const task = action.payload
       const newBalance  = +(state.balance + task.reward).toFixed(2)
       const newEarned   = +(state.dailyGoal.earned + task.reward).toFixed(2)
       const newHistory  = [task, ...state.history]
-
-      // Rebuild analytics
-      const analytics = rebuildAnalytics(newHistory)
-
+      const analytics   = rebuildAnalytics(newHistory)
       return {
         ...state,
         balance:   newBalance,
@@ -90,7 +83,6 @@ function reducer(state, action) {
 
     case ACTIONS.CLAIM_DAILY_BONUS: {
       const today = new Date().toISOString().slice(0, 10)
-      // Prevent claiming more than once per calendar day
       if (state.lastBonusClaimed === today) return state
       return {
         ...state,
@@ -129,11 +121,7 @@ function reducer(state, action) {
   }
 }
 
-/* ──────────────────────────────────────────
-   Analytics Helper
-────────────────────────────────────────── */
 function rebuildAnalytics(history) {
-  // Weekly earnings — last 7 days
   const now = new Date()
   const weeklyEarnings = []
   for (let i = 6; i >= 0; i--) {
@@ -146,25 +134,21 @@ function rebuildAnalytics(history) {
     weeklyEarnings.push({ date: dateStr, amount: +amount.toFixed(2) })
   }
 
-  // Platform breakdown
   const platformMap = {}
   history.forEach(t => {
-    platformMap[t.provider] = +(( platformMap[t.provider] || 0 ) + t.reward).toFixed(2)
+    platformMap[t.provider] = +((platformMap[t.provider] || 0) + t.reward).toFixed(2)
   })
   const platformBreakdown = Object.entries(platformMap).map(([platform, amount]) => ({ platform, amount }))
 
   return { weeklyEarnings, platformBreakdown }
 }
 
-/* ──────────────────────────────────────────
-   Context
-────────────────────────────────────────── */
 const EarnHubContext = createContext(null)
 
 export function EarnHubProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  // Persist key state to localStorage
+  // Load persisted state
   useEffect(() => {
     const saved = localStorage.getItem('earnhub_state')
     if (saved) {
@@ -175,6 +159,16 @@ export function EarnHubProvider({ children }) {
     }
   }, [])
 
+  // Fetch logged-in user on mount      ← added
+  useEffect(() => {
+    const token = localStorage.getItem('earnhub_token')
+    if (!token) return
+    authAPI.me()
+      .then(data => dispatch({ type: ACTIONS.SET_USER, payload: data.user || data }))
+      .catch(() => {})
+  }, [])
+
+  // Persist key state
   useEffect(() => {
     const persist = {
       balance:          state.balance,
