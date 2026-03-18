@@ -7,6 +7,7 @@ const connectDB  = require('./config/db')
 const authRoutes     = require('./routes/auth')
 const earningsRoutes = require('./routes/earnings')
 const userRoutes     = require('./routes/user')
+const cpxRoutes      = require('./routes/cpx')
 
 // Connect to MongoDB
 connectDB()
@@ -24,6 +25,7 @@ app.use(express.json())
 app.use('/api/auth',     authRoutes)
 app.use('/api/earnings', earningsRoutes)
 app.use('/api/user',     userRoutes)
+app.use('/api/cpx',      cpxRoutes)
 
 /* ── Health check ── */
 app.get('/api/health', (_, res) => res.json({ status: 'ok', timestamp: new Date() }))
